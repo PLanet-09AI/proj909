@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <a href="{{ url_for('booking.index') }}" class="py-4 px-2">Home</a>
+                    {% if session.get('user_token') %}
+                        <a href="{{ url_for('booking.create') }}" class="py-4 px-2">New Booking</a>
+                        <a href="{{ url_for('auth.logout') }}" class="py-4 px-2">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('auth.login') }}" class="py-4 px-2">Login</a>
+                        <a href="{{ url_for('auth.register') }}" class="py-4 px-2">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto mt-8 px-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="bg-blue-100 border-blue-500 text-blue-700 px-4 py-3 rounded mb-4">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
